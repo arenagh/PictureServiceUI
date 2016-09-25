@@ -70,4 +70,11 @@ angular.module('adminApp', [])
 		});
 	}
 	
+	scope.putTags = function() {
+		http.post("../resources/admin/tags").
+		success(function(data, status, header, config) {
+			window.alert("tag set")
+		});
+	};
+	
 }]);
