@@ -77,4 +77,11 @@ angular.module('adminApp', [])
 		});
 	};
 	
+	scope.setTmp = function() {
+		http.post("../resources/admin/tmp").
+		success(function(data, status, header, config) {
+			window.alert("tmp set")
+		});
+	};
+	
 }]);
