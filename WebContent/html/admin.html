@@ -25,22 +25,30 @@
     </div>
     
     <div id="meta">
-      <input type="button" class="btn btn-primary"h value="generate Metainfo" ng-click="genMeta()" />
+      <input type="button" class="btn btn-primary" value="generate Metainfo" ng-click="genMeta()" />
       <span>{{metaProgress}}%</span>
     </div>
     
     <div id="migrate">
-      <input type="button" class="btn btn-primary"h value="migrate Metainfo" ng-click="migrateMeta()" />
+      <input type="button" class="btn btn-primary" value="migrate Metainfo" ng-click="migrateMeta()" />
       <span>{{migrateProgress}}%</span>
     </div>
     
     <div id="put_tag">
-      <input type="button" class="btn btn-primary"h value="put tags" ng-click="putTags()" />
+      <input type="button" class="btn btn-primary" value="put tags" ng-click="putTags()" />
     </div>
     
     <div id="set_tmp">
-      <input type="button" class="btn btn-primary"h value="set tmp flag" ng-click="setTmp()" />
+      <input type="button" class="btn btn-primary" value="set tmp flag" ng-click="setTmp()" />
     </div>
+
+    <div id="get_Data">
+    <form method="get" action="">
+      <input type="submit" class="btn btn-primary" value="get data" formaction="../resources/admin/getData" />
+      <input type="submit" class="btn btn-primary" value="get data(tmp)" formaction="../resources/admin/getData/tmp"  />
+      </form>
+    </div>
+
     
   </div>
 </body>
