@@ -19,15 +19,19 @@ angular.module('pictureApp', [])
 	scope.showFolder = function(folder) {
 		http.get(scope.infoListBase + folder).
 	    success(function(data, status, headers, config) {
-	    	data.forEach(function(element) {
-	    		if (element.created) {
-	    			element.created = new Date(element.created);
+	    	var infos = [];
+	    	for (key in data) {
+	    		var value = data[key];
+	    		if (value.created) {
+	    			value.created = new Date(value.created);
 	    		}
-	    		if (element.downloaded) {
-	    			element.downloaded = new Date(element.downloaded);
+	    		if (value.downloaded) {
+	    			value.downloaded = new Date(value.downloaded);
 	    		}
-	    	});
-			scope.infoList = data.sort(function(p1, p2) {
+	    		value.id = key
+	    		infos.push(value);
+	    	}
+			scope.infoList = infos.sort(function(p1, p2) {
 				return p2.downloaded - p1.downloaded; 
 			});
     		scope.curFolder = folder;
@@ -40,7 +44,7 @@ angular.module('pictureApp', [])
 	scope.showPicture = function(event, index) {
 
 		var picInfo = scope.infoList[index];
-		showPic(picInfo.fileId);
+		showPic(picInfo.id);
 		
 		scope.curPicture = index;
 		
@@ -67,12 +71,12 @@ angular.module('pictureApp', [])
 		changePic(-1);
 	};
 	scope.startPic = function() {
-		showPic(scope.infoList[0].fileId);
+		showPic(scope.infoList[0].id);
 		scope.curPicture = 0;
 	};
 	scope.endPic = function() {
 		var last = scope.infoList.length - 1;
-		showPic(scope.infoList[last].fileId);
+		showPic(scope.infoList[last].id);
 		scope.curPicture = last;
 	};
 	
@@ -92,11 +96,11 @@ angular.module('pictureApp', [])
 		}
 		
 		var picInfo = scope.infoList[dest];
-		showPic(picInfo.fileId);
+		showPic(picInfo.id);
 		scope.curPicture = dest;
 	};
 	
-	function showPic(fileId) {
+	function showPic(id) {
 		var child = window.open("", "pic");
 		var width = child.innerWidth;
 		var height = child.innerHeight;
@@ -105,7 +109,7 @@ angular.module('pictureApp', [])
 			this.focus();
 		}
 		
-		var url = scope.picBase + fileId + (((width == 0) || (height == 0)) ? "" : ("?width=" + width + "&height=" + height));
+		var url = scope.picBase + id + (((width == 0) || (height == 0)) ? "" : ("?width=" + width + "&height=" + height));
 		
 		window.open(url, "pic");
 	}
