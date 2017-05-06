@@ -1,0 +1,9 @@
+<div id="picInfos" ng-style="{height:contentsHeight}">
+  <div style="overflow-y:auto;height:100%;">
+    <div class="col-md-2" style="height:180px;display:inline-block;" ng-repeat="info in $ctrl.infoList">
+      <a ng-click="$ctrl.showPicture($event, $index)">
+        <img src="../resources/thumbnail/{{info.id}}" />
+      </a>
+    </div>
+  </div>
+</div>
