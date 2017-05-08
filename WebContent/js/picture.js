@@ -211,4 +211,12 @@ class DownloadController {
 app.component("downloadForm", {
 	templateUrl: "../html/template/download_form.html",
 	controller: ["pageInfo", "$http", DownloadController]
-})
+});
+
+app.component("infoListLoad", {
+	bindings: {
+		infoListBase: "<"
+	},
+	templateUrl: "../html/template/info_list_load.html",
+	controller: ["pageInfo", "$http", TagButtonsController]
+});
