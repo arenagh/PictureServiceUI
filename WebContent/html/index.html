@@ -5,7 +5,7 @@
 <title>Picture Service</title>
 
 <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/latest/css/bootstrap.min.css">
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 <script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.10.0/ui-bootstrap-tpls.min.js"></script>
 
 <script src="../js/picture.js"></script>
@@ -16,12 +16,9 @@
 
 </head>
 <body>
-  <div id="pictures" class="container" ng-controller="pictureController" ng-init="init('../resources/info/tmp/list/', '../resources/picture/tmp/', '../resources/tag/tmp/list')">
+  <div id="pictures" class="container">
     <div id="menu-fix">
-      <div id="menu" class="row" ng-click="elimination($event)">
-        <br />
-        <a class="col-md-1" href="folder.html">folders</a><a class="col-md-1" href="tmp.html">tmp</a><a class="col-md-1" href="downloaded.html">downloaded</a><a class="col-md-1" href="admin.html">administrate</a> 
-      </div>
+      <menu page="'index'" style="margin: 0px; padding: 0px;"></menu>
     
       <h1>Picture Service</h1>
     </div>

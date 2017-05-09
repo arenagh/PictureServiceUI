@@ -16,17 +16,17 @@
 
 </head>
 <body>
-  <div id="pictures" class="container">
+  <div id="pictures" class="container" ng-init="picBase = '../resources/picture/tmp/'; infoListBase = '../resources/info/tmp/list/';">
     <div id="menu-fix" class="row">
       <menu page="'tmp'" style="margin: 0px; padding: 0px;"></menu>
       <current-folder></current-folder>
       <div id="nav-button" class="row" style="height:50px;">
-        <nav-buttons pic-base="'../resources/picture/tmp/'"></nav-buttons>&nbsp;<tag-buttons info-list-base="'../resources/info/tmp/list/'" folder-list-url="'../resources/tag/tmp/list'"></tag-buttons>
+        <nav-buttons pic-base="picBase"></nav-buttons>&nbsp;<tag-buttons info-list-base="infoListBase" folder-list-url="'../resources/tag/tmp/list'"></tag-buttons>
       </div>
       <download-form></download-form>
       <br />
     </div>
-    <picture-list pic-base="'../resources/picture/tmp/'" infoListBase="'../resources/info/tmp/list/'"></picture-list>
+    <picture-list pic-base="picBase" infoListBase="infoListBase" init-load="false"></picture-list>
   </div>
 </body>
 </html>

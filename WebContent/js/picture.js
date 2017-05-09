@@ -18,6 +18,30 @@ app.factory("showPicture", ["$window", ($window) => {
 	};
 }]);
 
+app.factory("getInfo", ["$http","pageInfo", ($http, pageInfo) => {
+	return (urlBase) => {
+		$http.get(urlBase + pageInfo.currentFolder).
+		then(function(response) {
+	    	const infos = [];
+	    	for (const key in response.data) {
+	    		const value = response.data[key];
+	    		if (value.created) {
+	    			value.created = new Date(value.created);
+	    		}
+	    		if (value.downloaded) {
+	    			value.downloaded = new Date(value.downloaded);
+	    		}
+	    		value.id = key
+	    		infos.push(value);
+	    	}
+			
+			pageInfo.infoList = infos.sort((p1, p2) => {
+				return p2.downloaded - p1.downloaded;
+			});
+		});
+	};
+}]);
+
 class MenuController {
 	
 	constructor() {
@@ -106,12 +130,13 @@ app.component("navButtons", {
 
 class TagButtonsController {
 	
-	constructor(pageInfo, $http) {
+	constructor(pageInfo, getInfo, $http) {
 		this.pageInfo = pageInfo;
+		this.getInfo = getInfo;
 		this.$http = $http;
 	}
 	
-	loadTags() {
+	$onInit() {
 		const ctrl = this;
 		this.$http.get(this.folderListUrl).
 	   then(function(response) {
@@ -123,25 +148,7 @@ class TagButtonsController {
 		this.pageInfo.currentFolder = tag;
 		
 		const pageInfo = this.pageInfo;
-		this.$http.get(this.infoListBase + tag).
-		then(function(response) {
-	    	const infos = [];
-	    	for (const key in response.data) {
-	    		const value = response.data[key];
-	    		if (value.created) {
-	    			value.created = new Date(value.created);
-	    		}
-	    		if (value.downloaded) {
-	    			value.downloaded = new Date(value.downloaded);
-	    		}
-	    		value.id = key
-	    		infos.push(value);
-	    	}
-			
-			pageInfo.infoList = infos.sort((p1, p2) => {
-				return p2.downloaded - p1.downloaded;
-			});
-		});
+		this.getInfo(this.infoListBase);
 	}
 	
 }
@@ -152,15 +159,22 @@ app.component("tagButtons", {
 		folderListUrl: "<"
 	},
 	templateUrl: "../html/template/tag_buttons.html",
-	controller: ["pageInfo", "$http", TagButtonsController]
+	controller: ["pageInfo", "getInfo", "$http", TagButtonsController]
 });
 
 class PictureListController {
 
-	constructor(pageInfo, showPicture, $http) {
+	constructor(pageInfo, getInfo, showPicture, $http) {
 		this.pageInfo = pageInfo;
+		this.getInfo = getInfo;
 		this.showPic = showPicture;
 		this.$http = $http;
+	}
+	
+	$onInit() {
+		if (this.initLoad) {
+			this.getInfo(this.infoListBase);
+		}
 	}
 	
 	get infoList() {
@@ -181,10 +195,11 @@ class PictureListController {
 app.component("pictureList", {
 	bindings: {
 		picBase: "<",
-		infoListBase: "<"
+		infoListBase: "<",
+		initLoad: "<"
 	},
 	templateUrl: "../html/template/picture_list.html",
-	controller: ["pageInfo", "showPicture", "$http", PictureListController]
+	controller: ["pageInfo",  "getInfo","showPicture", "$http", PictureListController]
 });
 
 class DownloadController {
